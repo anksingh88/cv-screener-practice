@@ -1,58 +1,89 @@
-console.log("This is cv screener ");
+console.log("This is my index.js");
+// Data is an array of objects which contains information about the candidates
+const data = [
+    {
+        name: 'Rohan Das',
+        age: 18,
+        city: 'Kolkata',
+        language: 'Python',
+        framework: 'Django',
+        image: 'https://randomuser.me/api/portraits/men/51.jpg'
+    },
 
-const data=[
     {
-        name : 'rohan',
-        age:'18',
-        city:'kolkate',
-        languages:'python',
-        image:"https://randomuser.me/api/portraits/thumb/men/75.jpg"
+        name: 'Shubham Sharma',
+        age: 28,
+        city: 'Bangalore',
+        language: 'JavaScript',
+        framework: 'Angular',
+        image: 'https://randomuser.me/api/portraits/men/54.jpg'
     },
+
     {
-        name : 'harry',
-        age:'28',
-        city:'pune',
-        languages:'c++',
-        image:"https://randomuser.me/api/portraits/thumb/men/54.jpg"
+        name: 'Camella Cabello',
+        age: 18,
+        city: 'Kolkata',
+        language: 'Python',
+        framework: 'Django',
+        image: 'https://randomuser.me/api/portraits/women/55.jpg'
     },
+
     {
-        name : 'om',
-        age:'48',
-        city:'mumbai',
-        languages:'javascript',
-        image:"https://randomuser.me/api/portraits/thumb/women/78.jpg"
+        name: 'Aishwariya Rai',
+        age: 45,
+        city: 'Mumbai',
+        language: 'Python',
+        framework: 'Flask',
+        image: 'https://randomuser.me/api/portraits/women/57.jpg'
+    },
+
+    {
+        name: 'Rohit Sharma',
+        age: 34,
+        city: 'Jharkhand',
+        language: 'Go',
+        framework: 'Go Framework',
+        image: 'https://randomuser.me/api/portraits/men/61.jpg'
     }
 ]
 
-//cv iterator
 
-function cviterator(profiles){
-    nextindex=0;
-    return{
-        next:function(){
-            return nextindex<profiles.length ? {value: profiles[nextindex++],done:false}:
-            {done:true}
+// CV Iterator
+function cvIterator(profiles){
+    let nextIndex=0;
+    return {
+        next: function(){
+            return nextIndex<profiles.length ?
+            {value: profiles[nextIndex++], done: false} :
+            {done: true}
         }
     };
 }
-const candidates=cviterator(data);
-nextcv();
-const next=document.getElementById("next");
-next.addEventListener('click',nextcv);
+const candidates = cvIterator(data);
 
-function nextcv(){
-    const currentcandidate= candidates.next().value;
-    let image=document.getElementById('image');
-    let profile=document.getElementById('profile');
-    image.innerHTML = `<img src='${currentcandidate.image}'>`;
-   
+nextCV();
+// Button listener for next button
+const next = document.getElementById('next');
+next.addEventListener('click', nextCV);
 
-    profile.innerHTML=`<ul class="list-group">
-    <li class="list-group-item">${currentcandidate.name}</li>
-    <li class="list-group-item">${currentcandidate.age} Years old</li>
-    <li class="list-group-item">${currentcandidate.city}</li>
-    <li class="list-group-item">${currentcandidate.languages}</li>
-    <li class="list-group-item">${currentcandidate.name}</li>
-  </ul>`
+
+function nextCV(){
+    const currentCandidate = candidates.next().value;
+    let image = document.getElementById('image');
+    let profile = document.getElementById('profile');
+    if(currentCandidate != undefined){
+    image.innerHTML = `<img src='${currentCandidate.image}'>`;
+    profile.innerHTML = `<ul class="list-group">
+    <li class="list-group-item">Name: ${currentCandidate.name}</li>
+    <li class="list-group-item">${currentCandidate.age} years old</li>
+    <li class="list-group-item">Lives in ${currentCandidate.city}</li>
+    <li class="list-group-item">Primarily works on ${currentCandidate.language}</li>
+    <li class="list-group-item">Uses ${currentCandidate.framework} framework</li>
+  </ul>`;
+    }
+    else{
+        alert('End of candidate applications');
+        window.location.reload();
+    }
 
 }
